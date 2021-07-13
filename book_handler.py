@@ -5,26 +5,37 @@ import book_query
 
 @dataclass
 class Book():
+    # id:int
     title: str
     description: str
     content: str
-    image_url: str
+    # image_url: str
 
     def create_book(self) -> str:
         book_query.create_book(self)
         return "Book Created"
 
     def update_book(self, id) -> str:
+        book_query.update_book(self, id)
         return "Book Updated"
 
-    def delete_book(self, id) -> str:
+    def delete_book(id) -> str:
+        book_query.delete_book(id)
         return "Book Deleted"
 
-    def fetch_books(self, id) -> str:
-        return "Books Fetched Successfully"
+    def fetch_books(self) -> str:
+        rows=book_query.fetch_all_books()
+        return rows
 
-    def search_book(self, search_key) -> str:
-        return "Book Found"
+
+    def fetch_book(id) -> str:
+        row=book_query.fetch_book(id)
+        return row
+     
+
+    def search_book(title) -> str:
+        rows=book_query.search(title)
+        return rows
 
     def add_favorite(self, id) -> str:
         return "Added to Favorite"
