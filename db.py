@@ -6,13 +6,13 @@ def create_tables():
 
 #Creating table as per requirement
 
-    command = """CREATE TABLE if not exists book (
+    command = """CREATE TABLE if not exists resources (
             id serial primary key,
+            author_name varchar(100) not null,
             title varchar(100) not null,
-            description varchar(100) not null,
-            contents text not null,
-            date_posted timestamp default now(),
-            updated_at timestamp default now()
+            image_url text not null,
+            link text not null
+            
     )"""
     
     
@@ -30,3 +30,4 @@ def create_tables():
     finally:
         if connection is not None:
             connection.close()
+# create_tables()

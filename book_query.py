@@ -1,3 +1,4 @@
+from app import delete, fetch, update
 import psycopg2
 import uuid
 from db import connection, cursor, create_tables
@@ -12,28 +13,30 @@ class Book():
     title: str
     description: str
     content: str
-    # image_url: str
+    image_url: str
 
 
 def create_book(book: Book):
     title = book.title
     description = book.description
     content = book.content
-    # image_url = book.image_url
+    image_url = book.image_url
 
     """ INSERT """
-    insert_query = f"INSERT INTO book (title, description, contents) VALUES ('{title}','{description}','{content}')"
-    cursor.execute(insert_query)
-    connection.commit()
-    return "Insert was successful"
-
+    try:
+        insert_query = f"INSERT INTO book (title, description, contents, image_url) VALUES ('{title}','{description}','{content}','{image_url}')"
+        cursor.execute(insert_query)
+        connection.commit()
+        return "Insert was successful"
+    except Exception as e:
+        return str(e)
 
 def update_book(book: Book,id):
     title = book.title
     description = book.description
     content = book.content
-    # image_url = book.image_url
-    update_query=f"UPDATE book SET title='{title}', description='{description}', contents='{content}' WHERE id='{id}' "
+    image_url = book.image_url
+    update_query=f"UPDATE book SET title='{title}', description='{description}', contents='{content}', image_url='{image_url}' WHERE id='{id}' "
     cursor.execute(update_query)
     connection.commit()
     return "Update was succesfull"
@@ -75,14 +78,13 @@ def fetch_book(id):
 def search(title):
      with connection as conn:
             with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cursor:
-                select_query=f"SELECT * FROM book WHERE title={title}"
+                select_query=f"SELECT * FROM book WHERE title LIKE '{title}'"
                 cursor.execute(select_query)
-                rows=cursor.fetchone()
-                if rows =="None":
+                rows=cursor.fetchall()                    
+                if rows is None:
                     return "search not found"
                 else:
                     return (rows)
     
 
-def add_to_favorite(id):
-    pass
+

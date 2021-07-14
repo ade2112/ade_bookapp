@@ -1,26 +1,31 @@
 from dataclasses import dataclass
 import uuid
 from pydantic import BaseModel
+import resource_query
 
 @dataclass
 class Resource(BaseModel):
-    id: uuid
+    # id: uuid
     author: str
     title: str
     image_ulr: str
     link: str
 
-    def create_resource(self, ) -> str:
-        return "resource Created"
+    def create_resource(self) -> str:
+        mes=resource_query.create_res(self)
+        return mes
 
     def update_resource(self, id) -> str:
-        return "resource Updated"
+        mes=resource_query.update_res(self,id)
+        return mes
 
-    def delete_resource(self, id) -> str:
-        return "resource Deleted"
+    def delete_resource(id) -> str:
+        mes=resource_query.delete_res(id)
+        return mes
 
-    def fetch_resources(self, id) -> str:
-        return "resources Fetched Successfully"
-
-    def search_resource(self, search_key) -> str:
-        return "resource Found"
+    def fetch_resources(self) -> str:
+        rows=resource_query.fetch_res()
+        return rows
+    def search_resource(self,title) -> str:
+        rows=resource_query.search(title)
+        return rows

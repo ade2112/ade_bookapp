@@ -1,15 +1,14 @@
 from dataclasses import dataclass
-import uuid
 import book_query
-
+from pydantic import BaseModel, validators
 
 @dataclass
-class Book():
+class Book(BaseModel):
     # id:int
     title: str
     description: str
     content: str
-    # image_url: str
+    image_url: str
 
     def create_book(self) -> str:
         book_query.create_book(self)
@@ -36,6 +35,3 @@ class Book():
     def search_book(title) -> str:
         rows=book_query.search(title)
         return rows
-
-    def add_favorite(self, id) -> str:
-        return "Added to Favorite"
