@@ -1,4 +1,4 @@
-from app import delete, fetch, update
+# from app import delete, fetch, update
 import psycopg2
 import uuid
 from db import connection, cursor, create_tables

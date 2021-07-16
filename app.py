@@ -29,6 +29,9 @@ def delete(id):
 def fetch():
     rows=book_handler.Book.fetch_books(id)
     return jsonify(rows)
+@app.route('/', methods=['GET'])
+def index():
+    return "okay"
 
 @app.route('/book/<id>', methods=['GET'])
 def fetch_one(id):
@@ -40,7 +43,7 @@ def search(title):
     rows=book_handler.Book.search_book(title)
     return jsonify(rows)
 
-@app.route('resource', methods=['POST'])
+@app.route('/resource', methods=['POST'])
 def create_res():
     body = request.json
     book = resource_handler.Resource(title=body['title'], author=body['author'],link=body['link'], image_url=body['image_url'])
@@ -55,18 +58,18 @@ def update_res(id):
     return mes
 
 @app.route('/resource/<id>', methods=['DELETE'])
-def delete(id):
+def delete_res(id):
     mes=resource_handler.Resource.delete_resource(id)
     return mes
 
 
 @app.route('/resource', methods=['GET'])
-def fetch():
+def fetch_res():
     rows=resource_handler.Resource.fetch_resources(id)
     return jsonify(rows)
 
 @app.route('/books/<string:title>', methods=['GET'])
-def search(title):
+def search_res(title):
     rows=resource_handler.Resource.search_resource(title)
     return jsonify(rows)
 
