@@ -16,7 +16,7 @@ def create():
 @app.route('/book/<id>', methods=['PUT'])
 def update(id):
     body = request.json
-    book = book_handler.Book(body['title'], body['description'], body['content'], body['image_url'])
+    book = book_handler.Book(title=body['title'], description=body['description'],content=body['content'], image_url=body['image_url'])
     mes = book.update_book(id)
     return mes
 
@@ -46,14 +46,14 @@ def search(title):
 @app.route('/resource', methods=['POST'])
 def create_res():
     body = request.json
-    book = resource_handler.Resource(title=body['title'], author=body['author'],link=body['link'], image_url=body['image_url'])
+    book = resource_handler.Resource(author=body['author'], title=body['title'],image_url=body['image_url'],link=body['link'])
     mes = book.create_resource()
     return mes
 
 @app.route('/resource/<id>', methods=['PUT'])
 def update_res(id):
     body = request.json
-    book = resource_handler.Resource(body['author'], body['title'], body['image_url'], body['link'])
+    book = resource_handler.Resource(author=body['author'], title=body['title'],image_url=body['image_url'],link=body['link'])
     mes = book.update_resource(id)
     return mes
 
@@ -68,7 +68,7 @@ def fetch_res():
     rows=resource_handler.Resource.fetch_resources(id)
     return jsonify(rows)
 
-@app.route('/books/<string:title>', methods=['GET'])
+@app.route('/resource/<string:title>', methods=['GET'])
 def search_res(title):
     rows=resource_handler.Resource.search_resource(title)
     return jsonify(rows)

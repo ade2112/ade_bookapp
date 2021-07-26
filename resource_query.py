@@ -28,16 +28,22 @@ def create_res(res:Reources):
         return ({"message":"inserted succesfully"})
     except Exception as e:
         return str(e)
-def update_res(res:Reources):
+def update_res(res:Reources, id):
     author = res.author
     title = res.title
     image_url = res.image_url
     link = res.link
     try:
-        update_query=f"UPDATE resources SET title='{title}', author_name='{author}', link='{link}', image_url='{image_url}' WHERE id='{id}' "
-        cursor.execute(update_query)
-        connection.commit()
-        return ({"message":"updated succesfully"})
+        select_query=f"SELECT * FROM resources WHERE id={id}"
+        cursor.execute(select_query)
+        d=cursor.fetchone()
+        if d is None:
+            return ({"message":"id does not exist"})
+        else:
+            update_query=f"UPDATE resources SET title='{title}', author_name='{author}', link='{link}', image_url='{image_url}' WHERE id='{id}' "
+            cursor.execute(update_query)
+            connection.commit()
+            return ({"message":"updated succesfully"})
     except Exception as e:
         return str(e)
 def delete_res(id):

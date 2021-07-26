@@ -3,12 +3,12 @@ import uuid
 from pydantic import BaseModel
 import resource_query
 
-@dataclass
+
 class Resource(BaseModel):
     # id: uuid
     author: str
     title: str
-    image_ulr: str
+    image_url: str
     link: str
 
     def create_resource(self) -> str:
